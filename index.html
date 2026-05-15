@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentor IA - Dados & BI</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f9fafb; color: #1f2937; }
+        .container { max-width: 1200px; margin: 0 auto; display: flex; height: 100vh; }
+        .sidebar { width: 250px; background: white; border-right: 1px solid #e5e7eb; padding: 20px; overflow-y: auto; }
+        .sidebar h1 { font-size: 24px; color: #3b82f6; margin-bottom: 30px; font-weight: bold; }
+        .nav { display: flex; flex-direction: column; gap: 10px; }
+        .nav-btn { padding: 12px 16px; border: none; border-radius: 8px; cursor: pointer; text-align: left; background: transparent; color: #4b5563; transition: all 0.3s; font-size: 14px; font-weight: 500; }
+        .nav-btn:hover { background: #f3f4f6; }
+        .nav-btn.active { background: #eff6ff; color: #3b82f6; }
+        .tip-box { margin-top: 30px; padding: 15px; background: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 6px; font-size: 12px; color: #1e40af; }
+        .main-content { flex: 1; display: flex; flex-direction: column; background: white; }
+        .header { padding: 20px 30px; border-bottom: 1px solid #e5e7eb; background: white; }
+        .header h2 { font-size: 20px; margin-bottom: 5px; }
+        .header p { font-size: 14px; color: #6b7280; }
+        .content { flex: 1; overflow-y: auto; padding: 30px; }
+        .home-hero { text-align: center; margin-bottom: 40px; }
+        .home-hero h1 { font-size: 36px; margin-bottom: 15px; font-weight: bold; }
+        .home-hero p { font-size: 16px; color: #6b7280; margin-bottom: 20px; }
+        .btn-primary { padding: 12px 24px; background: #3b82f6; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; transition: background 0.3s; }
+        .btn-primary:hover { background: #2563eb; }
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 40px; }
+        .feature-card { padding: 20px; background: white; border: 1px solid #e5e7eb; border-radius: 12px; text-align: center; }
+        .feature-icon { font-size: 32px; margin-bottom: 10px; }
+        .feature-card h3 { font-size: 16px; margin-bottom: 8px; }
+        .feature-card p { font-size: 13px; color: #6b7280; }
+        .chat-container { display: flex; flex-direction: column; height: 100%; }
+        .messages { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
+        .message { padding: 12px 16px; border-radius: 8px; max-width: 70%; font-size: 13px; line-height: 1.5; }
+        .message.mentor { background: #eff6ff; border-left: 4px solid #3b82f6; align-self: flex-start; }
+        .message.user { background: #f0fdf4; border-left: 4px solid #16a34a; align-self: flex-end; }
+        .input-area { display: flex; gap: 10px; }
+        .input-area input { flex: 1; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; }
+        .input-area button { padding: 10px 20px; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
+        .hidden { display: none; }
+        @media (max-width: 768px) { .container { flex-direction: column; } .sidebar { width: 100%; border-right: none; border-bottom: 1px solid #e5e7eb; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h1>🎓 Mentor IA</h1>
+            <p style="margin-bottom: 20px; font-size: 12px; color: #6b7280;">Senior em Dados</p>
+            <div class="nav">
+                <button class="nav-btn active" onclick="switchTab('home')">🏠 Início</button>
+                <button class="nav-btn" onclick="switchTab('chat')">💬 Mentoria</button>
+                <button class="nav-btn" onclick="switchTab('review')">🔍 Code Review</button>
+                <button class="nav-btn" onclick="switchTab('desafios')">🎯 Desafios</button>
+                <button class="nav-btn" onclick="switchTab('projetos')">📊 Projetos</button>
+            </div>
+            <div class="tip-box">
+                <strong>💡 Dica:</strong> Estude 1h por dia. Foco em projetos reais!
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- HOME -->
+            <div id="home" class="content">
+                <div class="home-hero">
+                    <h1>✨ Bem-vindo ao Mentor IA!</h1>
+                    <p>Seu mentor com 15 anos de experiência em dados</p>
+                    <button class="btn-primary" onclick="switchTab('chat')">Começar Agora →</button>
+                </div>
+                <h2 style="font-size: 20px; margin-bottom: 20px;">📚 O Que Você Encontra Aqui</h2>
+                <div class="features">
+                    <div class="feature-card"><div class="feature-icon">💬</div><h3>Mentoria</h3><p>Chat com mentor experiente</p></div>
+                    <div class="feature-card"><div class="feature-icon">🔍</div><h3>Code Review</h3><p>Revise SQL, Python, DAX</p></div>
+                    <div class="feature-card"><div class="feature-icon">🎯</div><h3>Desafios</h3><p>5 problemas progressivos</p></div>
+                    <div class="feature-card"><div class="feature-icon">📊</div><h3>Projetos</h3><p>4 projetos de portfólio</p></div>
+                    <div class="feature-card"><div class="feature-icon">🏆</div><h3>Boas Práticas</h3><p>Padrões profissionais</p></div>
+                    <div class="feature-card"><div class="feature-icon">📈</div><h3>Roadmap</h3><p>Caminho claro para evoluir</p></div>
+                </div>
+            </div>
+
+            <!-- CHAT -->
+            <div id="chat" class="content hidden">
+                <div class="header"><h2>💬 Mentoria</h2><p>Pergunte qualquer coisa sobre dados</p></div>
+                <div class="chat-container">
+                    <div class="messages" id="messagesContainer">
+                        <div class="message mentor">👋 Olá! Sou seu mentor com 15 anos de experiência. Posso ajudar com SQL, Python, DAX, Power BI e muito mais!</div>
+                    </div>
+                    <div class="input-area">
+                        <input type="text" id="chatInput" placeholder="Digite sua pergunta..." />
+                        <button onclick="sendMessage()">Enviar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CODE REVIEW -->
+            <div id="review" class="content hidden">
+                <div class="header"><h2>🔍 Code Review</h2><p>Cole seu código e receba feedback</p></div>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div style="display: flex; gap: 10px;"><label>Linguagem:</label><select id="codeLanguage"><option value="sql">SQL</option><option value="python">Python</option><option value="dax">DAX</option></select></div>
+                    <textarea id="codeArea" placeholder="Cole seu código aqui..." style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; font-family: 'Courier New', monospace; font-size: 12px; min-height: 200px;">SELECT * FROM vendas LIMIT 10;</textarea>
+                    <button class="btn-primary" onclick="reviewCode()" style="width: 100%;">🔍 Revisar Código</button>
+                    <div class="messages" id="reviewMessages"></div>
+                </div>
+            </div>
+
+            <!-- DESAFIOS -->
+            <div id="desafios" class="content hidden">
+                <div class="header"><h2>🎯 Desafios</h2><p>Pratique com problemas progressivos</p></div>
+                <div id="challengesList" style="display: grid; gap: 15px;"></div>
+            </div>
+
+            <!-- PROJETOS -->
+            <div id="projetos" class="content hidden">
+                <div class="header"><h2>📊 Projetos</h2><p>Construa seu portfólio profissional</p></div>
+                <div id="projectsList" style="display: grid; gap: 15px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const desafios = [
+            { id: 1, titulo: "SQL Básico", nivel: "🟢", desc: "Agregações com GROUP BY", topico: "SQL" },
+            { id: 2, titulo: "DAX Intermediário", nivel: "🟡", desc: "Medidas com CALCULATE", topico: "DAX" },
+            { id: 3, titulo: "Python ETL", nivel: "🟡", desc: "Limpeza com Pandas", topico: "Python" },
+            { id: 4, titulo: "Power BI KPI", nivel: "🔴", desc: "Dashboard executivo", topico: "Power BI" },
+            { id: 5, titulo: "SQL Avançado", nivel: "🔴", desc: "Window Functions", topico: "SQL" }
+        ];
+
+        const projetos = [
+            { titulo: "ETL End-to-End", desc: "Pipeline Python + SQL", status: "ready", techs: ["Python", "SQL", "Pandas"] },
+            { titulo: "Dashboard BI", desc: "Power BI com DAX", status: "progress", techs: ["Power BI", "DAX", "SQL"] },
+            { titulo: "Arquitetura Medallion", desc: "Fabric Bronze → Gold", status: "planning", techs: ["Fabric", "SQL", "Python"] },
+            { titulo: "Automação com APIs", desc: "Python + Scheduling", status: "ready", techs: ["Python", "APIs", "Scheduling"] }
+        ];
+
+        function switchTab(tab) {
+            document.querySelectorAll('.content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tab).classList.remove('hidden');
+            event.target.classList.add('active');
+            if (tab === 'desafios') loadDesafios();
+            if (tab === 'projetos') loadProjetos();
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+            const container = document.getElementById('messagesContainer');
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user';
+            userMsg.textContent = msg;
+            container.appendChild(userMsg);
+            input.value = '';
+            setTimeout(() => {
+                const mentorMsg = document.createElement('div');
+                mentorMsg.className = 'message mentor';
+                mentorMsg.innerHTML = '🎯 <strong>Excelente pergunta!</strong><br/><br/>✅ Sua lógica está correta<br/>💡 Sugestão: Use indexes para performance<br/>🔧 Próximo passo: Teste com dados reais';
+                container.appendChild(mentorMsg);
+                container.scrollTop = container.scrollHeight;
+            }, 800);
+        }
+
+        function reviewCode() {
+            const code = document.getElementById('codeArea').value;
+            const lang = document.getElementById('codeLanguage').value;
+            if (!code.trim()) return;
+            const container = document.getElementById('reviewMessages');
+            const reviewMsg = document.createElement('div');
+            reviewMsg.className = 'message mentor';
+            reviewMsg.innerHTML = `📋 <strong>Code Review - ${lang.toUpperCase()}</strong><br/><br/>✅ Lógica correta<br/>⚠️ Considere indexes<br/>💡 Use CTEs para melhor legibilidade<br/>🔧 Performance: +30% com otimização`;
+            container.appendChild(reviewMsg);
+        }
+
+        function loadDesafios() {
+            const container = document.getElementById('challengesList');
+            container.innerHTML = desafios.map(d => `
+                <div style="padding: 20px; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer;" onclick="alert('Desafio: ${d.titulo}')">
+                    <h3>${d.titulo} ${d.nivel}</h3>
+                    <p>${d.desc}</p>
+                    <div style="display: inline-block; padding: 4px 8px; background: #eff6ff; color: #3b82f6; border-radius: 4px; font-size: 12px; margin-top: 10px;">${d.topico}</div>
+                </div>
+            `).join('');
+        }
+
+        function loadProjetos() {
+            const container = document.getElementById('projectsList');
+            container.innerHTML = projetos.map(p => `
+                <div style="padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
+                        <h3>${p.titulo}</h3>
+                        <div style="padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: 600; background: ${p.status === 'ready' ? '#dcfce7' : p.status === 'progress' ? '#fef3c7' : '#fee2e2'}; color: ${p.status === 'ready' ? '#166534' : p.status === 'progress' ? '#92400e' : '#991b1b'};">
+                            ${p.status === 'ready' ? '✅ Pronto' : p.status === 'progress' ? '⏳ Progresso' : '📋 Planejamento'}
+                        </div>
+                    </div>
+                    <p>${p.desc}</p>
+                    <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
+                        ${p.techs.map(t => `<span style="padding: 3px 8px; background: #f3f4f6; color: #4b5563; border-radius: 4px; font-size: 11px;">${t}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        loadDesafios();
+    </script>
+</body>
+</html>
